@@ -14,11 +14,56 @@ library(purrr)
 library(broom)
 library(ggplot2)
 library(dplyr)
-sims = rerun(100, twogroup_fun(5,100,0.5,10) ) 
+sims = rerun(10, twogroup_fun(1000,885,10,60) ) 
 
 sims %>%
   map_df(tidy) %>% 
   filter(term == "groupgroup2") %>%
   ggplot( aes(estimate) ) +
   geom_density(fill = "blue", alpha = .5) +
-  geom_vline( xintercept = 0)
+  geom_vline( xintercept = 150)+
+  labs(x="effect")
+
+
+sims %>%
+  map_dbl(~summary(.x)$sigma) %>%
+  data.frame(sigma = .) %>%
+  ggplot( aes(sigma) ) +
+  geom_density(fill = "blue", alpha = .5) +
+  geom_vline(xintercept = 60)
+
+sims %>%
+  map_dbl(~summary(.x)$sigma) %>%
+  {. < 60} %>%
+  mean()
+
+sims %>%
+  map_df(tidy) %>%
+  filter(term == "groupgroup2") %>%
+  pull(p.value) %>%
+  {. <  0.05} %>%
+  mean()
+
+
+
+sims = rerun(100, twogroup_fun(1000,885,10,60) ) 
+sims %>% 
+  map_df(tidy) %>% 
+  filter(term == "groupgroup2") %>%
+  mutate(simulation=seq(1:n())) %>% 
+    ggplot(aes(x = estimate, xmin = estimate-std.error, xmax =estimate+std.error, y=simulation))+
+    geom_point() + 
+    geom_segment( aes(x = estimate-std.error, xend = estimate+std.error, y=simulation, yend=simulation))+
+  labs(x="effect")
+  
+sims %>% 
+  map_df(tidy) %>% 
+  filter(term == "(Intercept)") %>%
+  mutate(simulation=seq(1:n())) %>% 
+  ggplot(aes(x = estimate, xmin = estimate-std.error, xmax =estimate+std.error, y=simulation))+
+  geom_point() + 
+  geom_segment( aes(x = estimate-std.error, xend = estimate+std.error, y=simulation, yend=simulation))+
+  labs(x="mean of control group")
+
+   
+  

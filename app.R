@@ -71,7 +71,60 @@ ui <- fluidPage(
               ),
               hr(),
               fluidRow(
-                column(12, div(align="center", p("DATA ANALYSIS")))
+                column(12, div(align="center", p("DATA ANALYSIS For SINGLE EXPERIMENT"))),
+                tabsetPanel(
+                  tabPanel("t-test",
+                    fluidPage(
+                      fluidRow(
+                        
+                      )
+                    )
+                  ), 
+                  tabPanel("Anova",
+                    fluidPage(
+                      fluidRow(
+                        
+                      )
+                    )
+
+                  ), 
+                  tabPanel("Linear model",
+                           fluidPage(
+                             fluidRow(
+                               
+                             )
+                           )
+                           
+                  ), 
+                  tabPanel("Size effect",
+                           fluidPage(
+                             fluidRow(
+                               
+                             )
+                           )
+                           
+                  ), 
+                  tabPanel("Bayes",
+                           fluidPage(
+                             fluidRow(
+                               
+                             )
+                           )
+                           
+                  )
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                )
+                
+                
+                
+                
               )
               
               
@@ -84,7 +137,15 @@ ui <- fluidPage(
             fluidRow(
               br(),
               column(4, div(align="center", numericInput("simul", "# of simulation", value=1))),
-              column(8, div(align="center", actionButton("button2","Simulate")))
+              column(8, div(align="center", actionButton("button2","Run simulation")))
+            ),
+            hr(),
+            br(),
+            fluidRow(
+              
+              column(6, div(align="center", plotOutput("simalpha"))),
+              column(6, div(align="center", plotOutput("simeff")))
+              
             )
           )
           
@@ -96,6 +157,13 @@ ui <- fluidPage(
       )
    )
 ))
+
+
+
+
+
+
+
 
 # Define server logic required to draw a histogram
 
@@ -128,12 +196,32 @@ server <- function(input, output) {
        geom_jitter(aes(), alpha=0.9, 
                    position=position_jitter(w=0.1,h=0.1)))
    
-}
+
 
 #####risultati della simulazione di più esperimenti#####
+output$simalpha<-renderPlot(
+  sim() %>% 
+    map_df(tidy) %>% 
+    filter(term == "(Intercept)") %>%
+    mutate(simulation=seq(1:n())) %>% 
+    ggplot(aes(x = estimate, xmin = estimate-std.error, xmax =estimate+std.error, y=simulation))+
+    geom_point() + 
+    geom_segment( aes(x = estimate-std.error, xend = estimate+std.error, y=simulation, yend=simulation))+
+    labs(x="mean of control group")
+)
 
+output$simeff<-renderPlot(
+  sim() %>% 
+    map_df(tidy) %>% 
+    filter(term == "groupgroup2") %>%
+    mutate(simulation=seq(1:n())) %>% 
+    ggplot(aes(x = estimate, xmin = estimate-std.error, xmax =estimate+std.error, y=simulation))+
+    geom_point() + 
+    geom_segment( aes(x = estimate-std.error, xend = estimate+std.error, y=simulation, yend=simulation))+
+    labs(x="effect")
+)
 
-
+}
 
 # Run the application 
 shinyApp(ui = ui, server = server)
