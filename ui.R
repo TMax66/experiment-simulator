@@ -65,7 +65,7 @@ ui <- fluidPage(
                   tabPanel("t-test",
                     fluidPage(
                       fluidRow(
-                        
+                        tableOutput("ttest")
                       )
                     )
                   ), 

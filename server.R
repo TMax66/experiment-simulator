@@ -52,4 +52,30 @@ output$simeff<-renderPlot(
     labs(x="effect")
 )
 
+
+####t-test####
+
+output$ttest<-renderTable(
+  df() %>% 
+    dplyr::select(y, group) %>% 
+    mutate(y=round(y, 3)) %>% 
+    do(tidy(t.test(y~group, data=.)))
+  
+)
+
+
+
+
+
+####Anova####
+
+
+
+####Linear model####
+
+
+###Bayes####
+
+
+
 }
