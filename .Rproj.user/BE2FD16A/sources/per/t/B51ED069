@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1540936580435.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4285463937",
+    "id" : "B51ED069",
+    "lastKnownWriteTime" : 1540937064,
+    "last_content_update" : 1540937064931,
+    "path" : "G:/GITHUB/experiment-simulator/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+        "cursorPosition" : "135,17",
+        "scrollLine" : "112"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

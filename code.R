@@ -17,18 +17,28 @@ sims %>%
   geom_vline( xintercept = "effect")
 
 
-############################Analisi dei dati##################################à
+############################Analisi dei dati##################################
+library(purrr)
+library(broom)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
 source("2group.r")
 fit<-twogroup_fun(10,150,20,30)
 df<-augment(fit)
   df %>% 
   dplyr::select(y, group) %>% 
   mutate(y=round(y, 3)) %>% 
-    do(tidy(t.test(y~group, data=.)))
+    do(tidy(t.test(y~group, data=.))) %>% 
+    mutate("difference"=estimate2-estimate1) %>% 
+    as_data_frame %>% 
+    select(difference)
 
 
-  
-  dt_result = dt %>% group_by(species) %>% do(tidy(t.test(N15~region, data=.)))
+   
+
+
+
   
 
 

@@ -30,16 +30,16 @@ server <- function(input, output) {
 
 
 #####risultati della simulazione di più esperimenti#####
-output$simalpha<-renderPlot(
-  sim() %>% 
-    map_df(tidy) %>% 
-    filter(term == "(Intercept)") %>%
-    mutate(simulation=seq(1:n())) %>% 
-    ggplot(aes(x = estimate, xmin = estimate-std.error, xmax =estimate+std.error, y=simulation))+
-    geom_point() + 
-    geom_segment( aes(x = estimate-std.error, xend = estimate+std.error, y=simulation, yend=simulation))+
-    labs(x="mean of control group")
-)
+# output$simalpha<-renderPlot(
+#   sim() %>% 
+#     map_df(tidy) %>% 
+#     filter(term == "(Intercept)") %>%
+#     mutate(simulation=seq(1:n())) %>% 
+#     ggplot(aes(x = estimate, xmin = estimate-std.error, xmax =estimate+std.error, y=simulation))+
+#     geom_point() + 
+#     geom_segment( aes(x = estimate-std.error, xend = estimate+std.error, y=simulation, yend=simulation))+
+#     labs(x="mean of control group")
+# )
 
 output$simeff<-renderPlot(
   sim() %>% 
@@ -49,6 +49,7 @@ output$simeff<-renderPlot(
     ggplot(aes(x = estimate, xmin = estimate-std.error, xmax =estimate+std.error, y=simulation))+
     geom_point() + 
     geom_segment( aes(x = estimate-std.error, xend = estimate+std.error, y=simulation, yend=simulation))+
+    scale_x_continuous(limits=c(input$xmin_val,input$xmax_val))+
     labs(x="effect")
 )
 
@@ -59,7 +60,10 @@ output$ttest<-renderTable(
   df() %>% 
     dplyr::select(y, group) %>% 
     mutate(y=round(y, 3)) %>% 
-    do(tidy(t.test(y~group, data=.)))
+    do(tidy(t.test(y~group, data=.))) %>% 
+    mutate("effect"=estimate2-estimate1) %>% 
+    as_data_frame %>% 
+    select(difference)
   
 )
 
