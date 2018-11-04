@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1541283822648.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "348513933",
+    "id" : "4BD47009",
+    "lastKnownWriteTime" : 1541283894,
+    "last_content_update" : 1541283894284,
+    "path" : "G:/GITHUB/experiment-simulator/code.R",
+    "project_path" : "code.R",
+    "properties" : {
+        "cursorPosition" : "32,44",
+        "scrollLine" : "2"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

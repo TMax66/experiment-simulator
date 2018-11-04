@@ -61,9 +61,8 @@ output$ttest<-renderTable(
     dplyr::select(y, group) %>% 
     mutate(y=round(y, 3)) %>% 
     do(tidy(t.test(y~group, data=.))) %>% 
-    mutate("effect"=estimate2-estimate1) %>% 
-    as_data_frame %>% 
-    select(difference)
+    mutate("difference"=estimate2-estimate1) %>% 
+    dplyr::select(difference)
   
 )
 
