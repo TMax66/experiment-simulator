@@ -10,7 +10,7 @@ ui <- fluidPage(
    # Application title
    titlePanel("Experiment simulator"),
    
-   # Sidebar with a slider input for number of bins 
+   ######## Sidebar with a slider input for number of bins######
    sidebarLayout(
       sidebarPanel(
         sliderInput("nrep",
@@ -41,18 +41,17 @@ ui <- fluidPage(
          hr()
         
          #verbatimTextOutput("lm")
-      ),
+      )),
       
-      # Show a plot of the generated distribution
+      ##############PANNELLO PRINCIPALE##############
       mainPanel(
         tabsetPanel(
+          #########run experiment########
           tabPanel("Run experiment",
-            
-            fluidPage(
+             fluidPage(
               fluidRow(
                 br(),
-                column(12, div(align="center", actionButton("button","run experiment")))
-                ,
+                column(12, div(align="center", actionButton("button","run experiment"))),
                 br(),
                 hr(),
                 column(6, DT::dataTableOutput("tab")),
@@ -60,103 +59,140 @@ ui <- fluidPage(
               ),
               hr(),
               fluidRow(
-                column(12, div(align="center", p("DATA ANALYSIS For SINGLE EXPERIMENT"))),
-                tabsetPanel(
-                  tabPanel("t-test",
-                    fluidPage(
-                      fluidRow(
-                        tableOutput("ttest")
-                      )
-                    )
-                  ), 
-                  tabPanel("Anova",
-                    fluidPage(
-                      fluidRow(
-                        
-                      )
-                    )
-
-                  ), 
-                  tabPanel("Linear model",
-                           fluidPage(
-                             fluidRow(
-                               
-                             )
-                           )
-                           
-                  ), 
-                  tabPanel("Size effect",
-                           fluidPage(
-                             fluidRow(
-                               
-                             )
-                           )
-                           
-                  ), 
-                  tabPanel("Bayes",
-                           fluidPage(
-                             fluidRow(
-                               
-                             )
-                           )
-                           
-                  )
+                #####simulation experiments####
+                column(12, div(align="center", p("SIMULATE N EXPERIMENTS")))
+                ),
+              
+              fluidRow(
+                  br(),
+                  column(4, div(align="center", numericInput("simul", "# of simulation", value=1))),
+                  br(),
+                
+                  column(8, div(align="center", actionButton("button2","Run simulation")))
+                ),
+                hr(),
+                br(),
+              
+              fluidRow(
+                column(12, div(align="center", p("select min -max for x-scale"),
+                               numericInput("xmin_val","min", value=""),
+                               numericInput("xmax_val","max", value="")))
+                
+                
+              ),
+              
+              
+                fluidRow(
                   
-                  
-                  
-                  
-                  
-                  
-                  
+                  column(6, div(align="center", plotOutput("simeff")))
+                  #column(6, div(align="center", plotOutput("simeff")))
                   
                 )
-                
-                
-                
-                
-              )
+              )),
               
-              
-            )
-            
-            
-          ),
-        tabPanel("Data Analysis"),
-        
-        
-        
-        
-        tabPanel("Simulate of N experiment",
-                 fluidPage(
-                   fluidRow(
-                     br(),
-                     column(4, div(align="center", numericInput("simul", "# of simulation", value=1),
-                                   hr(),
-                                   p("select min -max for x-scale"),
-                                   numericInput("xmin_val","min", value=""),
-                                   numericInput("xmax_val","max", value=""))),
-                     column(8, div(align="center", actionButton("button2","Run simulation")))
-                   ),
-                   hr(),
-                   br(),
-                   fluidRow(
-                     
-                     column(6, div(align="center", plotOutput("simalpha"))),
-                     column(6, div(align="center", plotOutput("simeff")))
-                     
-                   )
-                 )
-                 
-        )
-
-       
-        
-       
+        tabPanel("Data Analysis")
       )
-   )
-))
+)
+)
 
 
+              
+              
+              
+              
+              
+              
+              
+              
+              
+            #   fluidRow(
+            #     column(12, div(align="center", p("DATA ANALYSIS For SINGLE EXPERIMENT"))),
+            #     tabsetPanel(
+            #       tabPanel("t-test",
+            #         fluidPage(
+            #           fluidRow(
+            #             tableOutput("ttest")
+            #           )
+            #         )
+            #       ), 
+            #       tabPanel("Anova",
+            #         fluidPage(
+            #           fluidRow(
+            #             
+            #           )
+            #         )
+            # 
+            #       ), 
+            #       tabPanel("Linear model",
+            #                fluidPage(
+            #                  fluidRow(
+            #                    
+            #                  )
+            #                )
+            #                
+            #       ), 
+            #       tabPanel("Size effect",
+            #                fluidPage(
+            #                  fluidRow(
+            #                    
+            #                  )
+            #                )
+            #                
+            #       ), 
+            #       tabPanel("Bayes",
+            #                fluidPage(
+            #                  fluidRow(
+            #                    
+            #                  )
+            #                )
+            #                
+            #       )
+            #       
+            #       
+            #       
+            #       
+            #       
+            #       
+            #       
+            #       
+            #     )
+            #     
+            #     
+            #     
+            #     
+            #   )
+            #   
+            #   
+            # )
+            # 
+            # 
+    
+        
+        
+        # tabPanel("Simulate of N experiment",
+        #          fluidPage(
+        #            fluidRow(
+        #              br(),
+        #              column(4, div(align="center", numericInput("simul", "# of simulation", value=1),
+        #                            hr(),
+        #                            p("select min -max for x-scale"),
+        #                            numericInput("xmin_val","min", value=""),
+        #                            numericInput("xmax_val","max", value=""))),
+        #              column(8, div(align="center", actionButton("button2","Run simulation")))
+        #            ),
+        #            hr(),
+        #            br(),
+        #            fluidRow(
+        #              
+        #              column(6, div(align="center", plotOutput("simalpha"))),
+        #              column(6, div(align="center", plotOutput("simeff")))
+        #              
+        #            )
+        #          )
+        #          
+        # )
 
-
-
+       
+        
+       
+      
