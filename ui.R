@@ -21,16 +21,16 @@ ui <- fluidPage(
         hr(),
         p("select the range values for outcome variable (Y)"),
 
-        numericInput("min_val","min", value="0"),
-        numericInput("max_val","max", value="10"),
+        numericInput("min_val","min", value="10"),
+        numericInput("max_val","max", value="50"),
         hr(),
         uiOutput("slider"),
         
          sliderInput("b1",
                      "effect:",
-                     min=-100,
-                     max=100,
-                     value=2),
+                     min=-50,
+                     max=50,
+                     value=0),
          sliderInput("sigma",
                      "unexplained variability",
                      min=0,
@@ -46,7 +46,7 @@ ui <- fluidPage(
       # Show a plot of the generated distribution
       mainPanel(
         tabsetPanel(
-          tabPanel("simulated data",
+          tabPanel("Run experiment",
             
             fluidPage(
               fluidRow(
@@ -121,27 +121,32 @@ ui <- fluidPage(
             
             
           ),
-          tabPanel("simulation of N experiment",
-          fluidPage(
-            fluidRow(
-              br(),
-              column(4, div(align="center", numericInput("simul", "# of simulation", value=1),
-                            hr(),
-                            p("select min -max for x-scale"),
-                            numericInput("xmin_val","min", value=""),
-                            numericInput("xmax_val","max", value=""))),
-              column(8, div(align="center", actionButton("button2","Run simulation")))
-            ),
-            hr(),
-            br(),
-            fluidRow(
-              
-              column(6, div(align="center", plotOutput("simalpha"))),
-              column(6, div(align="center", plotOutput("simeff")))
-              
-            )
-          )
-          
+        tabPanel("Data Analysis"),
+        
+        
+        
+        
+        tabPanel("Simulate of N experiment",
+                 fluidPage(
+                   fluidRow(
+                     br(),
+                     column(4, div(align="center", numericInput("simul", "# of simulation", value=1),
+                                   hr(),
+                                   p("select min -max for x-scale"),
+                                   numericInput("xmin_val","min", value=""),
+                                   numericInput("xmax_val","max", value=""))),
+                     column(8, div(align="center", actionButton("button2","Run simulation")))
+                   ),
+                   hr(),
+                   br(),
+                   fluidRow(
+                     
+                     column(6, div(align="center", plotOutput("simalpha"))),
+                     column(6, div(align="center", plotOutput("simeff")))
+                     
+                   )
+                 )
+                 
         )
 
        
