@@ -106,12 +106,8 @@ ui <- fluidPage(
                  br(),
                  br(),
                  fluidRow(
-
-                           column(4, div(align="center",style = "height:500px", plotOutput("simeff"))),
-                           column(4,div(align="center", plotOutput("histeff"))),
-                           column(4,div(align="center", plotOutput("sigma")))
-                           
-
+                   column(4,div(align="center", plotOutput("histeff"))),
+                           column(4, div(align="center", plotOutput("simeff")))
                          )
                  
                  
