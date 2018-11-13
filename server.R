@@ -67,15 +67,34 @@ output$histeff<-renderPlot(
 )
 
 
-output$sigma<-renderPlot(
+output$pvalue<-renderPlot(
   sim() %>%
-    map_dbl(~summary(.x)$sigma) %>%
-    data.frame(sigma = .) %>%
-    ggplot( aes(sigma) ) +
-    geom_density(fill = "blue", alpha = .5) +
-    geom_vline(xintercept = input$sigma)
+    map_df(tidy) %>%
+    filter(term == "groupgroup2") %>%
+    ggplot( aes(p.value) ) +
+    geom_histogram(color="black",fill = "blue", alpha = .5)+
+    geom_vline(xintercept = 0.05, lty=3)
 )
 
+# output$sigma<-renderPlot(
+#   sim() %>%
+#     map_dbl(~summary(.x)$sigma) %>%
+#     data.frame(sigma = .) %>%
+#     ggplot( aes(sigma) ) +
+#     geom_density(fill = "blue", alpha = .5) +
+#     geom_vline(xintercept = input$sigma)
+# )
+
+output$simtab<-DT::renderDataTable(
+  sim() %>%
+    map_df(tidy) %>% 
+    filter(term == "groupgroup2") %>% 
+    dplyr::select(estimate,std.error,statistic,"p value"=p.value) %>% 
+    mutate_at('p value', round, 5) %>% 
+    mutate_at(1:3, round, 3) %>% 
+    datatable(colnames = c('simulation' = 1),
+              options=list(pageLength = 10,searching = FALSE,paging = TRUE,autoWidth = TRUE))
+)
 
 
 

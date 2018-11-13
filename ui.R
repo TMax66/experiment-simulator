@@ -107,9 +107,14 @@ ui <- fluidPage(
                  br(),
                  fluidRow(
                    column(4,div(align="center", plotOutput("histeff"))),
-                           column(4, div(align="center", plotOutput("simeff")))
-                         )
-                 
+                           column(4, div(align="center", plotOutput("simeff"))),
+                            column(4, div(align="center", plotOutput("pvalue")))
+                   
+                         ),
+                 br(),hr(),
+                 fluidRow(
+                   column(12,DT::dataTableOutput("simtab"))
+                 )
                  
                  
                  ),

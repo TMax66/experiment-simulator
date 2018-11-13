@@ -14,6 +14,7 @@ library(purrr)
 library(broom)
 library(ggplot2)
 library(dplyr)
+library(DT)
 source("2group.r")
 sims = rerun(100, twogroup_fun(1000,885,10,60) ) 
 
@@ -67,5 +68,19 @@ sims %>%
   geom_segment( aes(x = estimate-std.error, xend = estimate+std.error, y=simulation, yend=simulation))+
   labs(x="mean of control group")
 
+
+sims %>%
+  map_df(tidy) %>% 
+  filter(term == "groupgroup2") %>% 
+  select(estimate,std.error,statistic,"p value"=p.value) %>% 
+  mutate_at('p value', round, 5) %>% 
+  mutate_at(1:3, round, 3) %>% 
+  datatable(options=list())
    
-  
+
+sims %>%
+  map_df(tidy) %>%
+  filter(term == "groupgroup2") %>%
+  ggplot( aes(p.value) ) +
+  geom_histogram(color="black",fill = "blue", alpha = .5)+
+  geom_vline(xintercept = 0.05)
