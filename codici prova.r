@@ -1,27 +1,28 @@
-
- twogroup_fun <- function(nrep, b0, b1, sigma) {
-
-  ngroup = 2
-  group = rep( c("group1", "group2"), each = nrep)
-  eps = rnorm(ngroup*nrep, 0, sigma)
-  growth = b0 + b1*(group == "group2") + eps
-  growthfit = lm(growth ~ group)
-  growthfit
-}
+# 
+#  twogroup_fun <- function(nrep, b0, b1, sigma) {
+# 
+#   ngroup = 2
+#   group = rep( c("group1", "group2"), each = nrep)
+#   eps = rnorm(ngroup*nrep, 0, sigma)
+#   growth = b0 + b1*(group == "group2") + eps
+#   growthfit = lm(growth ~ group)
+#   growthfit
+# }
 
 
 library(purrr)
 library(broom)
 library(ggplot2)
 library(dplyr)
-sims = rerun(10, twogroup_fun(1000,885,10,60) ) 
+source("2group.r")
+sims = rerun(100, twogroup_fun(1000,885,10,60) ) 
 
 sims %>%
   map_df(tidy) %>% 
   filter(term == "groupgroup2") %>%
   ggplot( aes(estimate) ) +
   geom_density(fill = "blue", alpha = .5) +
-  geom_vline( xintercept = 150)+
+  geom_vline( xintercept = 10)+
   labs(x="effect")
 
 

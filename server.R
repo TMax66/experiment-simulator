@@ -53,6 +53,31 @@ output$simeff<-renderPlot(
     labs(x="effect")
 )
 
+  
+output$histeff<-renderPlot(
+  sim() %>%
+    map_df(tidy) %>% 
+    filter(term == "groupgroup2") %>%
+    ggplot( aes(estimate) ) +
+    geom_density(fill = "blue", alpha = .5) +
+    geom_vline( xintercept = input$b1)+
+    labs(x="effect")
+
+  
+)
+
+
+output$sigma<-renderPlot(
+  sim() %>%
+    map_dbl(~summary(.x)$sigma) %>%
+    data.frame(sigma = .) %>%
+    ggplot( aes(sigma) ) +
+    geom_density(fill = "blue", alpha = .5) +
+    geom_vline(xintercept = input$sigma)
+)
+
+
+
 
 ####t-test####
 

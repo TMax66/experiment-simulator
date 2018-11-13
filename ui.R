@@ -40,8 +40,8 @@ ui <- fluidPage(
          
          hr()
         
-         #verbatimTextOutput("lm")
-      )),
+         
+      ),
       
       ##############PANNELLO PRINCIPALE##############
       mainPanel(
@@ -56,44 +56,71 @@ ui <- fluidPage(
                 hr(),
                 column(6, DT::dataTableOutput("tab")),
                 column(6,  plotOutput("plot1"))
-              ),
-              hr(),
-              fluidRow(
-                #####simulation experiments####
-                column(12, div(align="center", p("SIMULATE N EXPERIMENTS")))
-                ),
-              
-              fluidRow(
-                  br(),
-                  column(4, div(align="center", numericInput("simul", "# of simulation", value=1))),
-                  br(),
-                
-                  column(8, div(align="center", actionButton("button2","Run simulation")))
-                ),
-                hr(),
-                br(),
-              
-              fluidRow(
-                column(12, div(align="center", p("select min -max for x-scale"),
-                               numericInput("xmin_val","min", value=""),
-                               numericInput("xmax_val","max", value="")))
-                
-                
-              ),
-              
-              
-                fluidRow(
-                  
-                  column(6, div(align="center", plotOutput("simeff")))
-                  #column(6, div(align="center", plotOutput("simeff")))
-                  
-                )
+              )
               )),
-              
+          
+          # ,
+          #     fluidRow(
+          #       #####simulation experiments####
+          #       column(12, div(align="center", p("SIMULATE N EXPERIMENTS")))
+          #       ),
+          #     
+          #     fluidRow(
+          #         br(),
+          #         column(4, div(align="center", numericInput("simul", "# of simulation", value=1))),
+          #         br(),
+          #       
+          #         column(8, div(align="center", actionButton("button2","Run simulation")))
+          #       ),
+          #       hr(),
+          #       br(),
+          #     
+          #     fluidRow(
+          #       column(12, div(align="center", p("select min -max for x-scale"),
+          #                      numericInput("xmin_val","min", value=""),
+          #                      numericInput("xmax_val","max", value="")))
+          #       
+          #       
+          #     ),
+          #     
+          #     
+          #       fluidRow(
+          #         
+          #         column(6, div(align="center", plotOutput("simeff")))
+          #         #column(6, div(align="center", plotOutput("simeff")))
+          #         
+          #       )
+          #     )),
+        
+          
+        tabPanel("Simulate N Experiments",
+                 
+                 fluidRow(
+                           br(),
+                           column(4, div(align="center", 
+                                         numericInput("simul", "# of simulation", value=1))),
+                           br(),
+                           column(8, div(align="center", 
+                                         actionButton("button2","Run simulation")))
+                         ),
+                 br(),
+                 br(),
+                 fluidRow(
+
+                           column(4, div(align="center",style = "height:500px", plotOutput("simeff"))),
+                           column(4,div(align="center", plotOutput("histeff"))),
+                           column(4,div(align="center", plotOutput("sigma")))
+                           
+
+                         )
+                 
+                 
+                 
+                 ),
         tabPanel("Data Analysis")
       )
 )
-)
+))
 
 
               
