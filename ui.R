@@ -55,42 +55,10 @@ ui <- fluidPage(
                 br(),
                 hr(),
                 column(6, DT::dataTableOutput("tab")),
+                br(),br(),br(),
                 column(6,  plotOutput("plot1"))
               )
               )),
-          
-          # ,
-          #     fluidRow(
-          #       #####simulation experiments####
-          #       column(12, div(align="center", p("SIMULATE N EXPERIMENTS")))
-          #       ),
-          #     
-          #     fluidRow(
-          #         br(),
-          #         column(4, div(align="center", numericInput("simul", "# of simulation", value=1))),
-          #         br(),
-          #       
-          #         column(8, div(align="center", actionButton("button2","Run simulation")))
-          #       ),
-          #       hr(),
-          #       br(),
-          #     
-          #     fluidRow(
-          #       column(12, div(align="center", p("select min -max for x-scale"),
-          #                      numericInput("xmin_val","min", value=""),
-          #                      numericInput("xmax_val","max", value="")))
-          #       
-          #       
-          #     ),
-          #     
-          #     
-          #       fluidRow(
-          #         
-          #         column(6, div(align="center", plotOutput("simeff")))
-          #         #column(6, div(align="center", plotOutput("simeff")))
-          #         
-          #       )
-          #     )),
         
           
         tabPanel("Simulate N Experiments",
