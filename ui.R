@@ -17,12 +17,12 @@ ui <- fluidPage(
                     "Number of subject per group:",
                     min = 1,
                     max = 100,
-                    value = 5),
+                    value = 10),
         hr(),
         p("select the range values for outcome variable (Y)"),
 
         numericInput("min_val","min", value="10"),
-        numericInput("max_val","max", value="50"),
+        numericInput("max_val","max", value="30"),
         hr(),
         uiOutput("slider"),
         
@@ -35,10 +35,18 @@ ui <- fluidPage(
                      "unexplained variability",
                      min=0,
                      max=50,
-                     value=2),
+                     value=10),
          
          
-         hr()
+         hr(),
+        
+        div("Concept and R code by:",br(),
+            
+            p("",
+              a(href="https://www.linkedin.com/in/massimo-tranquillo-1301552a/",target="_blank",
+                "Massimo Tranquillo"),align="left", style = "font-size: 8pt")
+        )
+        
         
          
       ),
@@ -66,7 +74,7 @@ ui <- fluidPage(
                  fluidRow(
                            br(),
                            column(4, div(align="center", 
-                                         numericInput("simul", "# of simulation", value=1))),
+                                         numericInput("simul", "# of simulation", value=""))),
                            br(),
                            column(8, div(align="center", 
                                          actionButton("button2","Run simulation")))
@@ -85,8 +93,8 @@ ui <- fluidPage(
                  )
                  
                  
-                 ),
-        tabPanel("Data Analysis")
+                 )#,
+        #tabPanel("Data Analysis")
       )
 )
 ))

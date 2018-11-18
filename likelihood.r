@@ -38,7 +38,7 @@ df<- tibble(
 df %>% 
     ggplot(aes(theta, prior)) + 
     geom_line(col = "cornflowerblue")+
-    labs(title="Conoscenza a priori", x="Probabilità di Guarigione", y="probability")+
+    labs(title="Conoscenza a priori", x="Probabilit? di Guarigione", y="probability")+
     scale_y_continuous(labels=NULL)+
     geom_area(fill = "lightblue",alpha=0.6)+
     geom_vline(xintercept=0.64,linetype="dashed")
@@ -48,7 +48,7 @@ df %>%
 df %>% 
     ggplot(aes(theta, likelihood)) + 
     geom_line(col = "cornflowerblue")+
-    labs(title="Evidenza sperimentale",x="Probabilità di Guarigione")+
+    labs(title="Evidenza sperimentale",x="Probabilit? di Guarigione")+
     scale_y_continuous(labels=NULL)+
     geom_area(fill = "lightblue",alpha=0.6)+
     geom_vline(xintercept=22/30,linetype="dashed")
@@ -58,7 +58,7 @@ df %>%
 df  %>% 
     ggplot(aes(theta, posterior)) + 
     geom_line(col = "cornflowerblue")+
-    labs(title="Probabilità a posteriori",x="Probabilità di Guarigione")+
+    labs(title="Probabilit? a posteriori",x="Probabilit? di Guarigione")+
     scale_y_continuous(labels=NULL)+
     geom_area(fill = "lightblue",alpha=0.6)+
      geom_vline(xintercept=0.70,linetype="dashed")
@@ -189,3 +189,31 @@ l10<-L10 %>%
   scale_x_continuous(breaks=c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9))+labs(title="N.di positivi=10")
 
 plot_grid(l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10)
+
+##################################################
+
+
+
+
+library(ggplot2)
+library(gridExtra)
+
+# Make 3 simple graphics:
+g1=ggplot(mtcars, aes(x=qsec)) + geom_density(fill="slateblue")
+g2=ggplot(mtcars, aes(x=drat, y=qsec, color=cyl)) + geom_point(size=5) + theme(legend.position="none")
+g3=ggplot(mtcars, aes(x=factor(cyl), y=qsec, fill=cyl)) + geom_boxplot() + theme(legend.position="none")
+g4=ggplot(mtcars , aes(x=factor(cyl), fill=factor(cyl))) +  geom_bar()
+
+# Show the 4 plots on the same page
+grid.arrange(g1, g2, g3, g4, ncol=2, nrow =2)
+
+# Plots
+grid.arrange(g2, arrangeGrob(g3, g4, ncol=2), nrow = 2)
+grid.arrange(g1, g2, g3, nrow = 3)
+grid.arrange(g2, arrangeGrob(g3, g4, ncol=2), nrow = 1)
+grid.arrange(g2, arrangeGrob(g3, g4, nrow=2), nrow = 1)
+
+
+
+
+

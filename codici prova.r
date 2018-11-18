@@ -16,6 +16,20 @@ library(ggplot2)
 library(dplyr)
 library(DT)
 source("2group.r")
+
+
+fit<-twogroup_fun(100, 20,0,2)
+
+df<-augment(fit)
+
+
+
+
+
+
+
+
+
 sims = rerun(100, twogroup_fun(1000,885,10,60) ) 
 
 sims %>%
