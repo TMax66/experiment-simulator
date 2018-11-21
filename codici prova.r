@@ -18,7 +18,7 @@ library(DT)
 source("2group.r")
 
 
-fit<-twogroup_fun(100, 20,0,2)
+fit<-twogroup_fun(1, 20,0,2)
 
 df<-augment(fit)
 

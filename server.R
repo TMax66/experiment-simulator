@@ -24,14 +24,38 @@ server <- function(input, output) {
    
  ####BOXPLOT DATI SIMULATI####  
    output$plot1<-renderPlot(
-     df() %>% 
-       ggplot(aes(y=y,x=group))+geom_boxplot()+
-       geom_jitter(aes(), alpha=0.9, 
-                   position=position_jitter(w=0.1,h=0.1))+
-       scale_y_continuous(limits = c(input$min_val,input$max_val))
+     plot_grid( (fit()%>% 
+                   tidy(conf.int = TRUE) %>%
+                   #filter(term=="group") %>% 
+                   ggplot(aes(term, estimate))+
+                   geom_point()+labs(x="", y="effect size")+
+                   geom_pointrange(aes(ymin = conf.low, ymax = conf.high))+
+                   coord_flip()),
+                (df() %>% 
+                  ggplot(aes(x=group, y=y))+geom_boxplot(fill="firebrick4")+labs(x="")+
+                  geom_jitter(aes(), alpha=0.9, 
+                              position=position_jitter(w=0.1,h=0.1))+coord_flip()),
+               ncol=1,align='v')
    )
+     
+     
+     
+     
+     
+     
+     
+     
+     # df() %>% 
+     #   ggplot(aes(y=y,x=group))+geom_boxplot()+
+     #   geom_jitter(aes(), alpha=0.9, 
+     #               position=position_jitter(w=0.1,h=0.1))+
+     #   scale_y_continuous(limits = c(input$min_val,input$max_val))
+ 
   
    
+  
+  
+  
 
 
 output$simeff<-renderPlot(
