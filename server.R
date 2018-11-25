@@ -1,8 +1,8 @@
 server <- function(input, output) {
   
-  output$slider <- renderUI({
-    sliderInput("b0", "Mean of control group", min=input$min_val, max=input$max_val, value=20)
-  })
+  # output$slider <- renderUI({
+  #   sliderInput("b0", "Mean of control group", min=input$min_val, max=input$max_val, value=20)
+  # })
   
   
   source("2group.r")
@@ -24,17 +24,21 @@ server <- function(input, output) {
    
  ####BOXPLOT DATI SIMULATI####  
    output$plot1<-renderPlot(
-     plot_grid( (fit()%>% 
-                   tidy(conf.int = TRUE) %>%
-                   #filter(term=="group") %>% 
-                   ggplot(aes(term, estimate))+
-                   geom_point()+labs(x="", y="effect size")+
-                   geom_pointrange(aes(ymin = conf.low, ymax = conf.high))+
-                   coord_flip()),
-                (df() %>% 
-                  ggplot(aes(x=group, y=y))+geom_boxplot(fill="firebrick4")+labs(x="")+
-                  geom_jitter(aes(), alpha=0.9, 
-                              position=position_jitter(w=0.1,h=0.1))+coord_flip()),
+     plot_grid( (df() %>% 
+                   ggplot(aes(x=group, y=y))+geom_boxplot(fill="firebrick4")+labs(x="")+
+                   labs(title="sample distribution of y")+
+                   geom_jitter(aes(), alpha=0.9, 
+                               position=position_jitter(w=0.1,h=0.1))+coord_flip()),
+                (
+                  
+                  fit()%>% 
+                    tidy(conf.int = TRUE) %>%
+                    #filter(term=="group") %>% 
+                    ggplot(aes(term, estimate))+
+                    geom_point()+labs(x="", y="")+
+                    geom_pointrange(aes(ymin = conf.low, ymax = conf.high))+
+                    labs(title="95% C.I. estimate of effect size and intercept")+
+                    coord_flip()),
                ncol=1,align='v')
    )
      
@@ -66,7 +70,7 @@ output$simeff<-renderPlot(
     ggplot(aes(x = estimate, xmin = estimate-std.error, xmax =estimate+std.error, y=simulation))+
     geom_point() + 
     geom_segment( aes(x = estimate-std.error, xend = estimate+std.error, y=simulation, yend=simulation))+
-    scale_x_continuous(limits=c(input$xmin_val,input$xmax_val))+
+    #scale_x_continuous(limits=c(input$xmin_val,input$xmax_val))+
     labs(x="effect")
 )
 

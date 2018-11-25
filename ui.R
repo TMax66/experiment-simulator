@@ -10,33 +10,50 @@ library(cowplot)
 ui <- fluidPage(
    
    # Application title
-   titlePanel("Experiment simulator"),
+   titlePanel("Two-group experiment simulator"),
    
    ######## Sidebar with a slider input for number of bins######
    sidebarLayout(
       sidebarPanel(
-        sliderInput("nrep",
-                    "Number of subject per group:",
-                    min = 1,
-                    max = 100,
-                    value = 10),
-        hr(),
-        p("select the range values for outcome variable (Y)"),
-
-        numericInput("min_val","min", value="10"),
-        numericInput("max_val","max", value="30"),
-        hr(),
-        uiOutput("slider"),
+        # sliderInput("nrep",
+        #             "Number of subject per group:",
+        #             min = 1,
+        #             max = 100,
+        #             value = 10),
         
-         sliderInput("b1",
+        numericInput("nrep",
+                     "Number of subject per group",
+                     min = 1,
+                     max = 1000,
+                     value = 10),
+        
+        hr(),
+        
+        numericInput("b0", 
+                    "Mean of control group", 
+                    #min=1, 
+                    #max=2000, 
+                     value=20),
+        
+        
+        
+        # p("select the range values for outcome variable (Y)"),
+        # 
+        # numericInput("min_val","min", value="10"),
+        # numericInput("max_val","max", value="30"),
+        # hr(),
+        # uiOutput("slider"),
+        
+     
+         numericInput("b1",
                      "effect:",
-                     min=-50,
-                     max=50,
+                     min=-1000,
+                     max=1000,
                      value=0),
-         sliderInput("sigma",
+         numericInput("sigma",
                      "unexplained variability",
                      min=0,
-                     max=50,
+                     max=1000,
                      value=10),
          
          
@@ -64,9 +81,9 @@ ui <- fluidPage(
                 column(12, div(align="center", actionButton("button","run experiment"))),
                 br(),
                 hr(),
-                column(6, DT::dataTableOutput("tab")),
+                column(4, DT::dataTableOutput("tab")),
                 br(),br(),br(),
-                column(6,  plotOutput("plot1"))
+                column(8,  plotOutput("plot1"))
               )
               )),
         
