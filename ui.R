@@ -46,7 +46,7 @@ ui <- fluidPage(
         
      
          numericInput("b1",
-                     "effect:",
+                     "effect size:",
                      min=-1000,
                      max=1000,
                      value=0),
@@ -73,6 +73,11 @@ ui <- fluidPage(
       ##############PANNELLO PRINCIPALE##############
       mainPanel(
         tabsetPanel(
+          ####INTRO####
+          tabPanel("Introduction",
+                   includeHTML("intro.html")
+                   
+                   ),
           #########run experiment########
           tabPanel("Run experiment",
              fluidPage(
