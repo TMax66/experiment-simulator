@@ -18,9 +18,21 @@ library(DT)
 source("2group.r")
 
 
-fit<-twogroup_fun(1, 20,0,2)
+fit<-twogroup_fun(10, 20,0,2)
 
 df<-augment(fit)
+df %>% 
+  group_by(group) %>% 
+  summarise("N"=n(),
+            "mean"=mean(y),
+            "sd"=sd(y),
+            "median"=median(y),
+            "25%"=quantile(y, 0.25),
+            "50%"=quantile(y, 0.50),
+            "75%"=quantile(y, 0.75),
+            "min"=min(y),
+            "max"=max(y)) %>% 
+  mutate_if(is.numeric, funs(round(.,digits = 2)))
 
 
 

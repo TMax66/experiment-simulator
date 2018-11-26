@@ -10,7 +10,7 @@ library(cowplot)
 ui <- fluidPage(
    
    # Application title
-   titlePanel("Two-group experiment simulator"),
+   titlePanel("Two-group experiment simulator for continue outcome variable"),
    
    ######## Sidebar with a slider input for number of bins######
    sidebarLayout(
@@ -22,7 +22,7 @@ ui <- fluidPage(
         #             value = 10),
         
         numericInput("nrep",
-                     "Number of subject per group",
+                     "Number of subjects per group",
                      min = 1,
                      max = 1000,
                      value = 10),
@@ -30,7 +30,7 @@ ui <- fluidPage(
         hr(),
         
         numericInput("b0", 
-                    "Mean of control group", 
+                    "Mean of outcome variable (y) in control group", 
                     #min=1, 
                     #max=2000, 
                      value=20),
@@ -51,7 +51,7 @@ ui <- fluidPage(
                      max=1000,
                      value=0),
          numericInput("sigma",
-                     "unexplained variability",
+                     "Standard deviation of outcome variable",
                      min=0,
                      max=1000,
                      value=10),
@@ -84,6 +84,10 @@ ui <- fluidPage(
                 column(4, DT::dataTableOutput("tab")),
                 br(),br(),br(),
                 column(8,  plotOutput("plot1"))
+              ), 
+              fluidRow(
+                hr(),
+                column(12, DT::dataTableOutput("tab2"))
               )
               )),
         

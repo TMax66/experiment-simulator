@@ -18,7 +18,9 @@ server <- function(input, output) {
      
      df() %>% 
        dplyr::select(y, group) %>% 
-       mutate(y=round(y, 3)),colnames = c('Subject' = 1),class = 'cell-border stripe', extensions = 'Buttons', options = list(dom="Brtip",
+       mutate(y=round(y, 3)),colnames = c('Subject' = 1),
+     caption = 'Simulated data',
+     class = 'cell-border stripe', extensions = 'Buttons', options = list(dom="Brt",
          pageLength = 10,searching = FALSE,paging = TRUE,autoWidth = TRUE,
                                              buttons = c("csv",'excel')))
    
@@ -37,13 +39,31 @@ server <- function(input, output) {
                     ggplot(aes(term, estimate))+
                     geom_point()+labs(x="", y="")+
                     geom_pointrange(aes(ymin = conf.low, ymax = conf.high))+
-                    labs(title="95% C.I. estimate of effect size and intercept")+
+                    labs(title="95% C.I. estimate of effect size and control group mean")+
+                    scale_x_discrete(labels = c("control group",'effect size'))+
                     coord_flip()),
                ncol=1,align='v')
    )
      
-     
-     
+#####tabella summary per gruppo####
+     output$tab2<-DT::renderDataTable(server = FALSE,
+            df() %>% 
+            group_by(group) %>% 
+            summarise("N"=n(),
+                      "mean"=mean(y),
+                      "sd"=sd(y),
+                      "median"=median(y),
+                      "25%"=quantile(y, 0.25),
+                      "50%"=quantile(y, 0.50),
+                      "75%"=quantile(y, 0.75),
+                      "min"=min(y),
+                      "max"=max(y)) %>% 
+              mutate_if(is.numeric, funs(round(.,digits = 2))),
+            caption = 'Descriptive statistics of sample by group',
+            class = 'cell-border stripe', rownames=FALSE, option=list(dom = 't',searching = FALSE,paging = TRUE,autoWidth = TRUE)
+            
+            
+            )
      
      
      
