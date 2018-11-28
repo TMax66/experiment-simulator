@@ -75,6 +75,7 @@ ui <- fluidPage(
         tabsetPanel(
           ####INTRO####
           tabPanel("Introduction",
+                   br(),br(),
                    includeHTML("intro.html")
                    
                    ),

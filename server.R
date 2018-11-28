@@ -17,10 +17,12 @@ server <- function(input, output) {
    output$tab<-DT::renderDataTable(server = FALSE,
      
      df() %>% 
+       mutate(factor(group)) %>% 
+       mutate(group=recode(group, group1="Control",group2="Treatment")) %>% 
        dplyr::select(y, group) %>% 
        mutate(y=round(y, 3)),colnames = c('Subject' = 1),
      caption = 'Simulated data',
-     class = 'cell-border stripe', extensions = 'Buttons', options = list(dom="Brt",
+     class = 'cell-border stripe', extensions = 'Buttons', options = list(dom="Brtip",
          pageLength = 10,searching = FALSE,paging = TRUE,autoWidth = TRUE,
                                              buttons = c("csv",'excel')))
    
@@ -29,6 +31,7 @@ server <- function(input, output) {
      plot_grid( (df() %>% 
                    ggplot(aes(x=group, y=y))+geom_boxplot(fill="firebrick4")+labs(x="")+
                    labs(title="sample distribution of y")+
+                   scale_x_discrete(labels = c("Control","Treatment"))+
                    geom_jitter(aes(), alpha=0.9, 
                                position=position_jitter(w=0.1,h=0.1))+coord_flip()),
                 (
@@ -48,6 +51,8 @@ server <- function(input, output) {
 #####tabella summary per gruppo####
      output$tab2<-DT::renderDataTable(server = FALSE,
             df() %>% 
+              mutate(factor(group)) %>% 
+              mutate(group=recode(group, group1="Control",group2="Treatment")) %>% 
             group_by(group) %>% 
             summarise("N"=n(),
                       "mean"=mean(y),
@@ -61,8 +66,6 @@ server <- function(input, output) {
               mutate_if(is.numeric, funs(round(.,digits = 2))),
             caption = 'Descriptive statistics of sample by group',
             class = 'cell-border stripe', rownames=FALSE, option=list(dom = 't',searching = FALSE,paging = TRUE,autoWidth = TRUE)
-            
-            
             )
      
      
