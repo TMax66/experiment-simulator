@@ -5,9 +5,9 @@ account: izslerbg
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 594276
-bundleId: 1726223
+bundleId: 1727980
 url: https://izslerbg.shinyapps.io/expsimulator/
-when: 1543417505.57218
+when: 1543475203.30039
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .gitattributes|.RData|code.R|codici prova.r|L.tex|likelihood.r|old.R
