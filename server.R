@@ -80,7 +80,28 @@ server <- function(input, output) {
  
   
    
-  
+  output$Y<-renderPlot({   
+    mean=input$b0
+    sd=input$sigma
+    each=1e4
+    
+    if (input$b1==0)
+    {
+    dat<-tibble(y = c(rnorm(each, mean=mean, sd=sd)))
+    dat %>% 
+      ggplot(aes(x=y)) + geom_density(alpha=.08, adjust=2.5)
+    }
+    else
+    {   
+    dat <- tibble(cond = factor(rep(c("Control","Treatment"), each=each)), 
+                  y = c(rnorm(each, mean=mean, sd=sd),
+                        rnorm(each, mean=mean+input$b1, sd=sd)))
+    dat %>% 
+      ggplot(aes(x=y, fill=cond)) + geom_density(alpha=.3, adjust=2.5, )+
+      scale_fill_viridis_d()+theme(legend.title = element_blank())
+    }
+  }
+  )
   
   
 
@@ -137,7 +158,7 @@ output$simtab<-DT::renderDataTable(server = FALSE,
     mutate_at('p value', round, 5) %>% 
     mutate_at(1:3, round, 3) %>% 
     datatable(colnames = c('simulation' = 1),class = 'cell-border stripe',extensions = 'Buttons',
-              options=list(dom="Brtip",pageLength = 10,searching = FALSE,paging = TRUE,autoWidth = TRUE,
+              options=list(dom="Brtp",pageLength = 10,searching = FALSE,paging = TRUE,autoWidth = TRUE,
                             buttons = c("csv",'excel')))
 )
 

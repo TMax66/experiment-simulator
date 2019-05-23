@@ -47,6 +47,9 @@ ui <- fluidPage(
                      min=-1000,
                      max=1000,
                      value=0),
+        hr(),
+        br(),
+        plotOutput("Y"),
 
          
          
