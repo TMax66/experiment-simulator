@@ -1,13 +1,13 @@
-name: expsimulator
-title: expsimulator
+name: experiment-simulator
+title: experiment-simulator
 username:
-account: izslerbg
+account: bgizsler
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
-appId: 594276
-bundleId: 1727980
-url: https://izslerbg.shinyapps.io/expsimulator/
-when: 1543475203.30039
+appId: 944794
+bundleId: 2104317
+url: https://bgizsler.shinyapps.io/experiment-simulator/
+when: 1558627856.14739
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .gitattributes|.RData|code.R|codici prova.r|L.tex|likelihood.r|old.R

@@ -7,6 +7,7 @@ library(arm)
 library(DT)
 library(gridExtra)
 library(cowplot)
+
 ui <- fluidPage(
    
    # Application title
