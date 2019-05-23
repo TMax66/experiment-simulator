@@ -34,27 +34,19 @@ ui <- fluidPage(
                     #min=1, 
                     #max=2000, 
                      value=20),
-        
-        
-        
-        # p("select the range values for outcome variable (Y)"),
-        # 
-        # numericInput("min_val","min", value="10"),
-        # numericInput("max_val","max", value="30"),
-        # hr(),
-        # uiOutput("slider"),
-        
+    
+        numericInput("sigma",
+                     "Standard deviation of outcome variable",
+                     min=0,
+                     max=1000,
+                     value=10),
      
          numericInput("b1",
                      "effect size:",
                      min=-1000,
                      max=1000,
                      value=0),
-         numericInput("sigma",
-                     "Standard deviation of outcome variable",
-                     min=0,
-                     max=1000,
-                     value=10),
+
          
          
          hr(),
