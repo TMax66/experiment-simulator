@@ -22,12 +22,7 @@ ui <- fluidPage(
         #             max = 100,
         #             value = 10),
         
-        numericInput("nrep",
-                     "Number of subjects per group",
-                     min = 1,
-                     max = 1000,
-                     value = 10),
-        
+       
         hr(),
         
         numericInput("b0", 
@@ -41,17 +36,23 @@ ui <- fluidPage(
                      min=0,
                      max=1000,
                      value=10),
-     
-         numericInput("b1",
+    
+        plotOutput("Y"),
+        hr(),
+        
+        numericInput("b1",
                      "effect size:",
                      min=-1000,
                      max=1000,
                      value=0),
         hr(),
-        br(),
-        plotOutput("Y"),
 
-         
+        numericInput("nrep",
+                     "Number of subjects per group",
+                     min = 1,
+                     max = 1000,
+                     value = 10),
+        
          
          hr(),
         
