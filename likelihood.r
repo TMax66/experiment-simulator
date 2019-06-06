@@ -89,23 +89,22 @@ df %>%
 
 options(scipen=999)
 options(digits=2)
-L<-tibble(dati=c(0:10),"P=0.1"=dbinom(0:10,10, 0.1), "P=0.2"=dbinom(0:10,10, 0.2),"P=0.3"=dbinom(0:10,10,0.3), 
+L<-tibble(osservazione=c(0:10),"P=0.1"=dbinom(0:10,10, 0.1), "P=0.2"=dbinom(0:10,10, 0.2),"P=0.3"=dbinom(0:10,10,0.3), 
           "P=0.4"=dbinom(0:10,10,0.4),"P=0.5"=dbinom(0:10,10,0.5),"P=0.6"=dbinom(0:10,10,0.6),
           "P=0.7"=dbinom(0:10,10,0.7),"P=0.8"=dbinom(0:10,10,0.8),"P=0.9"=dbinom(0:10,10,0.9))
 
 
 
 
-
-
-
 print(xtable(round(L,2)), include.rownames=FALSE,  size="\\tiny")
-
 
 dprob<-function(y){
   ggplot(data=L, aes_(x=~osservazione, y=as.name(y)))+geom_col()+
-    scale_x_continuous(breaks=c(0:10))+labs(y="probability", title=as.name(y))
+    scale_x_continuous(breaks=c(0:10))+
+    labs(y="probability", x="n.soggetti guariti",title=bquote("Distribuzione di probabilità discreta"~ "("~theta==0.5 ~")"))
 }
+
+title=as.name(y)
 
 prob<-lapply(names(L[,2:10]), dprob)
 
