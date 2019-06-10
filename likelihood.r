@@ -1,4 +1,4 @@
-library(tidyverse)
+  library(tidyverse)
 
 beta_df <- tibble(
   theta = seq(0, 1, by = 0.01),
@@ -101,7 +101,7 @@ print(xtable(round(L,2)), include.rownames=FALSE,  size="\\tiny")
 dprob<-function(y){
   ggplot(data=L, aes_(x=~osservazione, y=as.name(y)))+geom_col()+
     scale_x_continuous(breaks=c(0:10))+
-    labs(y="probability", x="n.soggetti guariti",title=bquote("Distribuzione di probabilità discreta"~ "("~theta==0.5 ~")"))
+    labs(y="probability", x="n.soggetti guariti",title=bquote(theta==[y] ))
 }
 
 title=as.name(y)
