@@ -1,0 +1,137 @@
+
+--
+title: "OPTIMISE trial"
+output: html_notebook
+---
+
+```{r}
+library(epitools)
+library(tidyverse)
+N1<-366
+y1<-134
+N2<-364
+y2<-158
+
+rr<-riskratio(c(N1-y1, y1, N2-y2, y2), rev="rows", method = "boot", replicates=1e5)
+
+df<-tibble(est=0.843, lw=0.703, up=1.008)
+ci<-df %>% 
+  ggplot(aes(x=est, y=1))+geom_point()+
+  geom_segment( aes(x = lw,  xend = up, y=1, 
+                    yend=1))+
+  labs(x="Rischio Relativo")+
+  xlim(0.5915964,1.199596)+
+  theme(axis.ticks.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.title.y=element_blank())+
+  
+  geom_text(aes(x = 0.703), y = 1.005, label = "0.703",size=3)+
+  geom_text(aes(x = 1.008), y = 1.005, label = "1.008",size=3)+
+  geom_text(aes(x = 0.843), y = 1.005, label = "0.843",size=3)+
+  geom_text(aes(x = 0.843), y = 0.98, label = " RR=0.84[95%CI:0.703-1.008]",size=5)+
+  geom_text(aes(x = 0.843), y = 0.97, label = "p=0.067",size=5)+
+  geom_vline(aes(xintercept=1), color="red")+
+  geom_vline(aes(xintercept=0.9), color="red", linetype=2)+
+  geom_vline(aes(xintercept=1.1), color="red", linetype=2)+
+  geom_text(aes(x = 1), y = 1.03, label = "Equivalenza",size=4)
+  
+  
+  
+  
+```
+
+
+
+
+
+```{r}
+library(rethinking)
+library(tidyverse)
+library(brms)
+T<-quap(
+  alist(
+    y~dbinom(y+x, p), 
+    p~dbeta(1,1)
+  ),
+  data=list(y=134, x=232)
+)
+C<-quap(
+  alist(
+    y~dbinom(y+x, p), 
+    p~dbeta(1,1)
+  ),
+  data=list(y=158,x=206 )
+)
+Tpost<-extract.samples(T)
+Cpost<-extract.samples(C)
+RRpost<-Tpost/Cpost
+
+bayes<-RRpost %>% 
+  ggplot(aes(x=p), col="navy")+
+  geom_histogram(aes(y=..density..),fill="lightblue", col="blue")+
+  #geom_density(fill="lightblue",alpha=0.3)+
+  labs(x="Rischio Relativo")+
+  xlim(0.5915964,1.199596)+
+  geom_segment(x=0.699,xend=0.998, y=0.001, yend=0.001, colour="black", size=2)+
+  geom_text(aes(x = 0.699), y = 0.2, label = "0.699",size=4)+
+  geom_text(aes(x = 0.998), y = 0.2, label = "0.998",size=4)+
+  geom_text(aes(x = 0.85), y = 0.5, label = "0.95% HDI",size=4)+
+  geom_text(aes(x = 0.85), y = 5.3, label = "media=0.84",size=4)+
+  geom_vline(aes(xintercept=1), color="red")+
+  geom_vline(aes(xintercept=0.9), color="red", linetype=2)+
+  geom_vline(aes(xintercept=1.1), color="red", linetype=2)+
+  geom_text(aes(x = 1), y = 4, label = "Equivalenza",size=4)
+  
+
+
+
+```
+
+```{r}
+library(patchwork)
+
+#plot_grid(ci,bayes, ncol=1,align='v' )
+
+ci/bayes
+
+```
+
+```{r}
+dat <- with(density(RRpost$p), data.frame(x, y))
+
+
+
+dat %>% 
+ggplot() +
+    geom_area(aes(x = x, y = y, fill = x < 1), alpha = 0.4, colour = "navy")+
+  scale_fill_manual(values = c("thistle", "navy")) +
+  guides(fill = "none")+
+  xlim(0.5915964,1.199596)+
+  geom_vline(aes(xintercept=0.9), color="red", linetype=2)+
+  geom_vline(aes(xintercept=1.1), color="red", linetype=2)+
+  geom_text(aes(x = 1), y = 4, label = "Equivalenza",size=4)+
+  geom_vline(aes(xintercept=1), color="red")+
+  labs(x="Rischio Relativo")+
+  geom_text(aes(x = 0.85), y = 2.5, label = "97,3%",size=4)
+
+dat %>% 
+ggplot() +
+    geom_area(aes(x = x, y = y, fill = x < 0.9), alpha = 0.4, colour = "navy")+
+  scale_fill_manual(values = c("thistle", "navy")) +
+  guides(fill = "none")+
+  xlim(0.5915964,1.199596)+
+  geom_vline(aes(xintercept=0.9), color="red", linetype=2)+
+  geom_vline(aes(xintercept=1.1), color="red", linetype=2)+
+  geom_text(aes(x = 1), y = 4, label = "Equivalenza",size=4)+
+  geom_vline(aes(xintercept=1), color="red")+
+  labs(x="Rischio Relativo")+
+  geom_text(aes(x = 0.85), y = 2.5, label = "78%",size=4)
+
+
+```
+
+
+
+
+
+
